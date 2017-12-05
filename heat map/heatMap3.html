@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Heatmaps</title>
+    <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+
+    #map {
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto', 'sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+    }
+
+    #floating-panel {
+        background-color: #fff;
+        border: 1px solid #999;
+        left: 25%;
+        padding: 5px;
+        position: absolute;
+        top: 10px;
+        z-index: 5;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="floating-panel">
+        <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+        <button onclick="changeGradient()">Change gradient</button>
+        <button onclick="changeRadius()">Change radius</button>
+        <button onclick="changeOpacity()">Change opacity</button>
+    </div>
+    <div id="map"></div>
+    <script type="text/javascript" src="hdata.js"></script>
+    <script>
+    function generatePoints() {
+        const { header, data } = hdata;
+        console.log(data)
+        const { la1, lo1, dx, ny } = header;
+        const loopLength = ny;
+        const iPoint = {
+            lat: la1,
+            lng: lo1
+        };
+
+        const points = [];
+        points.push(iPoint);
+
+        for (let i = 1; i < loopLength; i++) {
+            const prevPoint = points[i - 1];
+            const currentPoint = {
+                lat: prevPoint.lat,
+                lng: prevPoint.lng + dx
+            };
+
+            points.push(currentPoint);
+        }
+
+        return points;
+
+
+    }
+
+    console.log(generatePoints())
+
+    // This example requires the Visualization library. Include the libraries=visualization
+    // parameter when you first load the API. For example:
+    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
+
+    var map, heatmap;
+
+      //  function initMap() {
+      //   map = new google.maps.Map(document.getElementById('map'), {
+      //     center: { lat: 20, lng: -160 },
+      //     zoom: 2
+      //   });
+
+      //   // Get the earthquake data (JSONP format)
+      //   // This feed is a copy from the USGS feed, you can find the originals here:
+      //   //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+      //   var script = document.createElement('script');
+      //   script.setAttribute(
+      //       'src',
+      //       'https://storage.googleapis.com/mapsdevsite/json/quakes.geo.json');
+      //   document.getElementsByTagName('head')[0].appendChild(script);
+      // }
+
+      // Defines the callback function referenced in the jsonp file.
+      function eqfeed_callback(data) {
+        console.log('dd', data)
+        map.data.addGeoJson(data);
+      }
+
+    function initMap() {
+        const { la1, lo1 } = hdata.header;
+        const iPoint = {
+            lat: la1,
+            lng: lo1
+        };
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 7,
+            center: iPoint,
+            // center: {lat: 12.9715987, lng: 77.5945627},
+
+            mapTypeId: 'satellite'
+        });
+
+        console.log(map)
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+            data: getPoints(),
+            map: map
+        });
+    }
+
+    function toggleHeatmap() {
+        heatmap.setMap(heatmap.getMap() ? null : map);
+    }
+
+    function changeGradient() {
+        var gradient = [
+            'rgba(0, 255, 255, 0)',
+            'rgba(0, 255, 255, 1)',
+            'rgba(0, 191, 255, 1)',
+            'rgba(0, 127, 255, 1)',
+            'rgba(0, 63, 255, 1)',
+            'rgba(0, 0, 255, 1)',
+            'rgba(0, 0, 223, 1)',
+            'rgba(0, 0, 191, 1)',
+            'rgba(0, 0, 159, 1)',
+            'rgba(0, 0, 127, 1)',
+            'rgba(63, 0, 91, 1)',
+            'rgba(127, 0, 63, 1)',
+            'rgba(191, 0, 31, 1)',
+            'rgba(255, 0, 0, 1)'
+        ]
+        heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+    }
+
+    function changeRadius() {
+        heatmap.set('radius', heatmap.get('radius') ? null : 20);
+    }
+
+    function changeOpacity() {
+        heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+    }
+
+    // Heatmap data: 500 Points
+    function getPoints() {
+
+        const a = generatePoints().map(point => new google.maps.LatLng(point.lat, point.lng));
+        // console.log(a)
+        return a;
+    }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjMMd3j9VWGEV6yyqOsrkySgl28vEhnG8 &libraries=visualization&callback=initMap">
+    </script>
+</body>
+
+</html>

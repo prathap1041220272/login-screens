@@ -1,0 +1,36 @@
+ #div1 {
+        width: 400px;
+        height: 400px;
+        margin: auto;
+        border: 1px solid white;
+        border-radius: 4px;
+        -webkit-box-shadow: 10px 17px 77px 17px rgba(0,0,0,0.35);
+-moz-box-shadow: 10px 17px 77px 17px rgba(0,0,0,0.35);
+box-shadow: 10px 17px 77px 17px rgba(0,0,0,0.35);
+    }
+    #div{
+    	padding-top: 100px;opacity: 0.85;
+    }
+
+    .body{
+background-image:url(f.jpg);
+    }
+    #h{
+    	color: white;padding-top: 20px;
+    }
+
+    .label{
+    	color: white;
+    }
+
+    #input{
+    	background-color: white;
+    	border-color: white;
+    }
+
+    #a{
+    	color: white;
+    }
+    #radio{
+    	color:rgb(0,0,0);
+    }

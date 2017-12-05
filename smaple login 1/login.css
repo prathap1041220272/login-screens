@@ -1,0 +1,57 @@
+.color label 
+{
+	color: white;
+}
+.color {
+	color: white;
+}
+.color input[type = text1] {
+	width : 180px;
+	padding : 12px 20px;
+	margin : 8px 0;
+	display : inline-block;
+	border :1px solid #16546b;
+	border-radius : 4px;
+	box-sizing : border-box;
+	font-family: verdana;
+}
+.color input[type = text2] {
+	width : 180px;
+	padding : 12px 20px;
+	margin : 8px 0;
+	display : inline-block;
+	border :1px solid #16546b;
+	border-radius : 4px;
+	box-sizing : border-box;
+	font-family: verdana;
+	margin-left: 16px;
+}
+
+.color input[type = submit] {
+
+	width : 150px;
+	background-color : #16546b;
+	color : white ;
+	padding : 14px 20px;
+	margin : 8px 0;
+	margin-left: 95px; 
+	border : none;
+	border-radius : 4px;
+	curser : pointer;
+}
+
+.color {
+	background: url(6.jpg);
+	/*background-color : #C0C0C0;*/ 
+	width : 280px;
+	padding: 22px 40px;
+	margin : 16px 0;
+	border :1px solid black;
+	border-radius : 4px;
+float: right;
+	/* */
+}
+.check [type = checkbox] {
+	color: white;
+
+}

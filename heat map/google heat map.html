@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+    #map {
+        width: 100%;
+        height: 400px;
+        background-color: grey;
+    }
+    </style>
+</head>
+
+<body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+    function getMyPosition(cb) {
+        if (typeof cb !== 'function') {
+            throw TypeError('cb should be function')
+        }
+        if (navigator.geolocation) {
+            navigator.geolocation
+                .getCurrentPosition(cb)
+        }
+    }
+
+
+    function drawMap(lat, lng) {
+        if (!lat || !lng) {
+            throw TypeError('LAT and LNG Arguments Should Not Be Empty');
+        }
+       console.log(lat)
+              console.log(lng)
+
+        var myLocation = { lat, lng };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: myLocation,
+        });
+        var marker = new google.maps.Marker({
+            position: myLocation,
+            map: map
+        });
+    }
+
+
+
+
+
+
+    function initMap() {
+
+        getMyPosition(function(position) {
+            const { latitude, longitude } = position.coords;
+            drawMap(latitude, longitude);
+        })
+
+    }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjMMd3j9VWGEV6yyqOsrkySgl28vEhnG8&callback=initMap">
+    </script>
+</body>
+
+</html>
